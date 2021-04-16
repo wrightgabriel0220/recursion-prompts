@@ -25,30 +25,50 @@ var factorial = function(n) {
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
-  // INPUT: an array of numbers
-  // OUTPUT: the sum of the array's numbers
-  // collapse the array in on itself
-  // BASE CASES:
-  // is the array empty?
   if (array.length === 0) {
     return 0;
   }
-  // is the array's length 1?
+
   if (array.length === 1) {
     return array[0];
   }
-    // return array[0] which is now the sum
-  // RECURSIVE CASES:
-  // collapse array.pop() into array[array.length-2]
+
   var arrayCopy = array.slice();
-  arrayCopy[array.length - 2] = arrayCopy[array.length - 2] + arrayCopy.pop();
-  // return sum(array)(
+  arrayCopy[array.length - 2] = arrayCopy[arrayCopy.length - 2] + arrayCopy.pop();
   return sum(arrayCopy);
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+  debugger;
+  // INPUT: an array with nested arrays containing numbers
+  // OUTPUT: the sum of all numbers in the array
+  // if the array has no values
+  var arrayCopy = array.slice();
+  if (arrayCopy.length === 0) {
+    return 0;
+  }
+  // if we're dealing with a nested array at the end of the array
+  if (Array.isArray(arrayCopy[arrayCopy.length - 1])) {
+    // the last value becomes arraySum on itself
+    arrayCopy[arrayCopy.length - 1] = arraySum(arrayCopy[arrayCopy.length - 1]);
+  }
+  // if the value before the last is a nested array
+  if (Array.isArray(arrayCopy[arrayCopy.length - 2])) {
+    // the second to last value becomes arraySum on itself
+    arrayCopy[arrayCopy.length - 2] = arraySum(arrayCopy[arrayCopy.length - 2]);
+  }
+  // if there is only one value left in the array
+  if (arrayCopy.length === 1) {
+    return arrayCopy[0];
+  }
+  // BASE CASES:
+  // RECURSIVE:
+  // extract the value from the array
+  // collapse the front of the array down
+  arrayCopy[arrayCopy.length - 2] = arrayCopy[arrayCopy.length - 2] + arrayCopy.pop();
+  return arraySum(arrayCopy);
 };
 
 // 4. Check if a number is even.
