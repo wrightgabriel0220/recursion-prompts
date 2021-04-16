@@ -73,6 +73,22 @@ var arraySum = function(array) {
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  // convert to absolute value
+  var num = Math.abs(n);
+  // subtract 2 until reaching 0 or getting to a point
+  // where we can't subtract further without going negative
+  // BASE CASES:
+  // if we reach 0, even/true
+  if (num === 0) {
+    return true;
+  }
+  // if not, odd/false
+  if (num - 2 < 0) {
+    return false;
+  }
+  // RECURSIVE:
+  num -= 2;
+  return isEven(num);
 };
 
 // 5. Sum all integers below a given integer.
